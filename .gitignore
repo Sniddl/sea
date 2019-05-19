@@ -1,3 +1,9 @@
+# VS Code
+.vscode
+
+# Vagrant
+.vagrant
+
 # Compiled Object files
 *.slo
 *.lo

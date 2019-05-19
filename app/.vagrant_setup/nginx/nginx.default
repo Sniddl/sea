@@ -1,0 +1,38 @@
+
+# redirect http traffic to https
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    return 302 https://$server_name$request_uri;
+}
+
+# handle https traffic
+server {
+    
+    #use ssl and http2 protocol
+    listen 443 ssl http2 default_server;
+    listen [::]:443 ssl http2 default_server;
+
+    # include https certificate information	
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+
+    # set the root directory
+    root /app/bin;
+
+    # set the default path
+    index main;
+
+    # try to find the current path or pass it to the main execuatble.
+    location / {
+        try_files $uri $uri/ /main?$args;
+    }
+
+    # run the main execuatble file. Pass all the fastcgi variables as environment variables.
+    location /main {
+        fastcgi_param SCRIPT_FILENAME $request_filename;
+        include fastcgi_params;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
+}
+
