@@ -9,6 +9,5 @@
 4. run `vagrant up`
 5. run `vagrant ssh`
 6. run `/app/.vagrant_setup/packageInstallation.sh` on the vagrant machine.
-7. cd to `/app`
-8. run `make`
-9. go to `192.168.10.10` in browser.
+7. go to `https://192.168.10.10` in browser.
+8. trust invalid ssl certificate
